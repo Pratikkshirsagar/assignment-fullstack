@@ -2,6 +2,7 @@ const express = require('express');
 const dotenv = require('dotenv');
 const connectDB = require('./config/db');
 const colors = require('colors');
+const cors = require('cors');
 
 const courseRoute = require('./routes/course');
 const userRouter = require('./routes/user');
@@ -13,6 +14,13 @@ dotenv.config({ path: './config/config.env' });
 connectDB();
 
 const app = express();
+
+// Body parser
+app.use(express.json());
+
+app.use(express.urlencoded({ extended: false }));
+
+app.use(cors());
 
 // Router midleware
 app.use('/api/v1/courses', courseRoute);

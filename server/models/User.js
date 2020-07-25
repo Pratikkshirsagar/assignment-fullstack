@@ -25,6 +25,11 @@ const UserSchema = new mongoose.Schema({
     minlength: 6,
     select: false,
   },
+  courses: {
+    type: mongoose.Schema.ObjectId,
+    ref: 'Course',
+    required: true,
+  },
   createdAt: {
     type: Date,
     default: Date.now,

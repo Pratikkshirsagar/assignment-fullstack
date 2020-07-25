@@ -1,20 +1,69 @@
+const Courses = require('../models/Course');
+
 // get /api/v1/courses
-exports.getCourses = (req, res) => {
-  res.status(200).json({ msg: 'OK' });
+exports.getCourses = async (req, res) => {
+  try {
+    const courses = await Courses.find();
+
+    res
+      .status(200)
+      .json({ success: true, count: courses.length, data: courses });
+  } catch (err) {
+    console.log(err);
+  }
 };
 
-exports.getCourse = (req, res) => {
-  res.status(200).json({ msg: 'OK' });
+// get /api/v1/courses/:id
+exports.getCourse = async (req, res) => {
+  try {
+    const courses = await Courses.findById(req.params.id);
+
+    res.status(200).json({ success: true, data: courses });
+  } catch (err) {
+    console.log(err);
+  }
 };
 
-exports.createCourse = (req, res) => {
-  res.status(200).json({ msg: 'OK' });
+// POST /api/v1/courses
+exports.createCourse = async (req, res) => {
+  try {
+    const course = await Courses.create(req.body);
+
+    res.status(200).json({
+      success: true,
+      data: course,
+    });
+  } catch (err) {
+    console.log(err);
+  }
 };
 
-exports.updateCourse = (req, res) => {
-  res.status(200).json({ msg: 'OK' });
+// PATCH /api/v1/courses/:id
+exports.updateCourse = async (req, res) => {
+  try {
+    const course = await Courses.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+      runValidators: true,
+    });
+
+    res.status(200).json({
+      success: true,
+      data: course,
+    });
+  } catch (err) {
+    console.log(err);
+  }
 };
 
-exports.deleteCourse = (req, res) => {
-  res.status(200).json({ msg: 'OK' });
+// DELETE /api/v1/courses/:id
+exports.deleteCourse = async (req, res) => {
+  try {
+    await Courses.findByIdAndDelete(req.params.id);
+    res.status(200).json({
+      success: true,
+      data: {},
+    });
+  } catch (err) {
+    console.log(err);
+  }
 };

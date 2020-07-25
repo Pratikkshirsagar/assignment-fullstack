@@ -11,7 +11,7 @@ const CourseSchema = mongoose.Schema({
     required: [true, 'Please add a description'],
   },
   subject: {
-    type: [String],
+    type: Array,
     required: true,
   },
   createdAt: {
